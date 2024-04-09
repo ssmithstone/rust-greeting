@@ -25,14 +25,12 @@ fn print_current_time() {
 
 fn print_greeting() {
     let args: Vec<String> = env::args().collect();
-    if args.len() < 2 {
-        let name = "Luke Skywalker".to_string();
-        println!("Hello, {}!", name);
-    } else {
-        let name = args.get(1);
-        match name {
-            Some(n) => println!("Hello, {}!", n),
-            None => panic!(),
+    let name = args.get(1);
+    match name {
+        Some(n) => println!("Hello, {}!", n),
+        None => {
+            let name = "Luke Skywalker".to_string();
+            println!("Hello, [{}]!", name);
         }
     }
 }
