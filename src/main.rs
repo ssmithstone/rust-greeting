@@ -1,5 +1,6 @@
 use std::env;
-use chrono::{Datelike, Local, Timelike};
+use chrono::{Datelike, Local, NaiveTime, Timelike};
+
 
 fn main() {
     print_greeting();
@@ -23,14 +24,23 @@ fn print_current_time() {
     println!("Hour: {}\nMinute: {}\nSeconds: {}", hour, minutes, seconds);
 }
 
+fn print_day_stage(time: NaiveTime) -> String {
+    return match time.hour() {
+        0..=11 => "morning".to_string(),
+        12..=17 => "afternoon".to_string(),
+        _ => "evening".to_string(),
+    }
+}
+
 fn print_greeting() {
     let args: Vec<String> = env::args().collect();
     let name = args.get(1);
+    let day_stage = print_day_stage(Local::now().time());
     match name {
-        Some(n) => println!("Hello, {}!", n),
+        Some(n) => println!("Good, {} {}!", day_stage, n),
         None => {
             let name = "Luke Skywalker".to_string();
-            println!("Hello, [{}]!", name);
+            println!("Good, {} [{}]!", day_stage, name);
         }
     }
 }
